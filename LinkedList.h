@@ -60,7 +60,7 @@ public:
 };
 
 /*
-================================= Realisation of class ListNode =================================
+================================= Realization of class ListNode =================================
 */
 
 template <typename T>
@@ -82,11 +82,11 @@ template <typename T>
 void ListNode<T>::operator =(ListNode<T> *element) { _value = element->_value; }
 
 /*
-================================= Realisation of class CustomList =================================
+================================= Realization of class LinkedList =================================
 */
 
 template <typename T>
-LinkedList<T>::LinkedList() : _head(NULL), _tail(NULL), _size(0) {}
+LinkedList<T>::LinkedList() : _head(nullptr), _tail(nullptr), _size(0) {}
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
