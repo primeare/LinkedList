@@ -1,6 +1,6 @@
 /*
 * Author: Vladyslav Dukhin
-* Version: 0.1.1 (10.04.2016)
+* Version: 0.1.2 (14.04.2016)
 * Copyright (c) Flexare Inc.
 */
 
@@ -25,6 +25,8 @@ public:
 	void operator =(ListNode<T>*);
 	template <typename T>
 	friend std::ostream& operator <<(std::ostream&, const ListNode<T>&);
+	template <typename T>
+	friend std::ostream& operator <<(std::ostream&, const LinkedList<T>&);
 };
 
 template <typename T>
@@ -108,7 +110,7 @@ template <typename T>
 size_t LinkedList<T>::size() { return _size; }
 
 template <typename T>
-bool LinkedList<T>::isEmpty() { return (_head == nullptr && _tail == nullptr && _size == 0) ? true : false; }
+bool LinkedList<T>::isEmpty() { return _size == 0 ? true : false; }
 
 template <typename T>
 bool LinkedList<T>::contains(T element) {
@@ -138,6 +140,10 @@ void LinkedList<T>::add(T value) {
 
 template <typename T>
 void LinkedList<T>::add(size_t index, T value) {
+	if (isEmpty()) {
+		add(value);
+		return;
+	}
 	if (index >= 0 && index < _size) {
 		ListNode<T> *node = _head;
 		for (size_t i = 0; i < index; ++i) {
@@ -167,7 +173,8 @@ void LinkedList<T>::addAll(std::initializer_list<T> elements) {
 template <typename T>
 bool LinkedList<T>::remove(T value) {
 	ListNode<T> *node = _head;
-	for (size_t i = 0; i < _size; ++i) {
+	bool isDeleted = false;
+	while (node != nullptr) {
 		if (node->_value != value) {
 			node = node->_next;
 		}
@@ -177,13 +184,16 @@ bool LinkedList<T>::remove(T value) {
 			if (_tail == node && node->_prev != nullptr) _tail = node->_prev;
 			if (_head == node && node->_next != nullptr) _head = node->_next;
 			if (_head == _tail && _tail == node) _head = _tail = nullptr;
+			ListNode<T> *tmp = node->_next;
 			node->_next = nullptr;
 			node->_prev = nullptr;
+			node = tmp;
+			tmp = nullptr;
 			_size--;
-			return true;
+			isDeleted = true;
 		}
 	}
-	return false;
+	return isDeleted;
 }
 
 template <typename T>
@@ -283,4 +293,17 @@ template <typename T>
 ListNode<T>& LinkedList<T>::operator [](size_t index) {}
 
 template <typename T>
-std::ostream& operator <<(std::ostream &out, const LinkedList<T> &list) {}
+std::ostream& operator <<(std::ostream &out, const LinkedList<T> &list) {
+	ListNode<T> *node = list._head;
+	out << '[';
+	while (node != nullptr) {
+		if (node->_next != nullptr)
+			out << node->_value << ", ";
+		else
+			out << node->_value;
+		node = node->_next;
+	}
+	out << ']';
+	node = nullptr;
+	return out;
+}

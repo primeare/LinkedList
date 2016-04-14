@@ -52,7 +52,7 @@ Doubly linked list is widely used in different algorithms and for storing data.
   void add(value);
   ```
 
-  * Add new value to the specific place in the List by index starting from 0
+  * Add new value to the specific place in the List by index starting from 0. After insertion element will be available on that index. If the List is empty than the value will be simply added to the List
 
   ```cpp
   void add(index, value);
@@ -66,7 +66,7 @@ Doubly linked list is widely used in different algorithms and for storing data.
   list.addAll({'a', 'b', 'c', 'a', 'b', 's'});
   ```
 
-  * Remove specific value from the List. Returns true if succeed, or false if the value is not present in the List
+  * Remove all elements with specific value from the List. Returns true if succeed, or false if the value is not present in the List
 
   ```cpp
   bool remove(value);
