@@ -1,6 +1,6 @@
 /*
 * Author: Vladyslav Dukhin
-* Version: 0.1.2 (14.04.2016)
+* Version: 0.2.0 (14.04.2016)
 * Copyright (c) Flexare Inc.
 */
 
@@ -41,11 +41,10 @@ public:
 	size_t size();
 	bool isEmpty();
 	bool contains(T);
-	T* toArray(); // TODO : use smart pointers
 	void add(T);
 	void add(size_t, T);
 	void addAll(std::initializer_list<T>);
-	bool remove(T); // repair
+	bool remove(T);
 	T remove(size_t);
 	bool removeAll(std::initializer_list<T>);
 	void clear();
@@ -113,15 +112,17 @@ template <typename T>
 bool LinkedList<T>::isEmpty() { return _size == 0 ? true : false; }
 
 template <typename T>
-bool LinkedList<T>::contains(T element) {
-	// TODO : contains()
+bool LinkedList<T>::contains(T value) {
+	ListNode<T> *node = _head;
+	while (node != nullptr) {
+		if (node->_value != value) {
+			node = node->_next;
+		}
+		else {
+			return true;
+		}
+	}
 	return false;
-}
-
-template <typename T>
-T* LinkedList<T>::toArray() {
-	// TODO : toArray() + use smart pointers
-	return nullptr;
 }
 
 template <typename T>
@@ -275,22 +276,54 @@ T LinkedList<T>::set(size_t index, T value) {
 }
 
 template <typename T>
-size_t LinkedList<T>::indexOf(T element) {}
+size_t LinkedList<T>::indexOf(T element) {
+	// TODO : indexOf()
+	return 0;
+}
 
 template <typename T>
-size_t LinkedList<T>::lastIndexOf(T element) {}
+size_t LinkedList<T>::lastIndexOf(T element) {
+	// TODO : lastIndexOf()
+	return 0;
+}
 
 template <typename T>
-LinkedList<T>& LinkedList<T>::subList(size_t fromIndex, size_t toIndex) {}
+LinkedList<T>& LinkedList<T>::subList(size_t fromIndex, size_t toIndex) {
+	// TODO : subList()
+	return *(new LinkedList);
+}
 
 template <typename T>
-bool LinkedList<T>::swap(size_t index1, size_t index2) {}
+bool LinkedList<T>::swap(size_t index1, size_t index2) {
+	if (index1 >= 0 && index1 < _size && index2 >= 0 && index2 < _size) {
+		ListNode<T> tmp = (*this)[index1];
+		(*this)[index1] = (*this)[index2];
+		(*this)[index2] = tmp;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 template <typename T>
-void LinkedList<T>::sort() {}
+void LinkedList<T>::sort() {
+	// TODO : sort()
+}
 
 template <typename T>
-ListNode<T>& LinkedList<T>::operator [](size_t index) {}
+ListNode<T>& LinkedList<T>::operator [](size_t index) {
+	if (index >= 0 && index < _size) {
+		ListNode<T> *node = _head;
+		for (size_t i = 0; i < index; ++i) {
+			node = node->_next;
+		}
+		return *node;
+	}
+	else {
+		throw std::out_of_range("LinkedList :: operator [index]");
+	}
+}
 
 template <typename T>
 std::ostream& operator <<(std::ostream &out, const LinkedList<T> &list) {

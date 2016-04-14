@@ -121,3 +121,24 @@ Doubly linked list is widely used in different algorithms and for storing data.
   ```cpp
   void sort();
   ```
+
+  * Get specific List element by its index starting from 0. Returns element from the List
+
+  ```cpp
+  // Examples
+  #include <iostream>
+  std::cout << list[0];
+  // or
+  list[3] = 15;
+  // or
+  list[1] = list[5];
+  ```
+
+  * Output List to the standard output stream
+
+  ```cpp
+  // Example
+  #include <iostream>
+  std::cout << list << std::endl;
+  // Will output the List in format: [element0, element1, ..., elementN]
+  ```
