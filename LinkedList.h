@@ -1,10 +1,12 @@
 /*
 * Author: Vladyslav Dukhin
-* Version: 0.2.0 (14.04.2016)
+* Version: 0.2.1 (13.06.2016)
 * Copyright (c) Flexare Inc.
 */
 
 #pragma once
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
 #include <iostream>
 #include <initializer_list>
 
@@ -19,10 +21,10 @@ private:
 	ListNode<T> *_prev;
 	friend LinkedList<T>;
 public:
-	ListNode(T);
-	void operator =(T);
-	void operator =(ListNode<T>&);
-	void operator =(ListNode<T>*);
+	ListNode(const T);
+	ListNode<T>& operator =(const T);
+	ListNode<T>& operator =(const ListNode<T>&);
+	ListNode<T>& operator =(const ListNode<T>*);
 	template <typename T>
 	friend std::ostream& operator <<(std::ostream&, const ListNode<T>&);
 	template <typename T>
@@ -52,7 +54,7 @@ public:
 	T set(size_t, T);
 	size_t indexOf(T);
 	size_t lastIndexOf(T);
-	LinkedList<T>& subList(size_t, size_t); // TODO : use smart pointers
+	LinkedList<T>& subList(size_t, size_t);
 	bool swap(size_t, size_t);
 	void sort();
 	ListNode<T>& operator [](size_t);
@@ -65,7 +67,7 @@ public:
 */
 
 template <typename T>
-ListNode<T>::ListNode(T value) : _value(value), _next(nullptr), _prev(nullptr) {}
+ListNode<T>::ListNode(const T value) : _value(value), _next(nullptr), _prev(nullptr) {}
 
 template <typename T>
 std::ostream& operator <<(std::ostream &out, const ListNode<T> &element) {
@@ -74,13 +76,13 @@ std::ostream& operator <<(std::ostream &out, const ListNode<T> &element) {
 }
 
 template <typename T>
-void ListNode<T>::operator =(T value) { _value = value; }
+ListNode<T>& ListNode<T>::operator =(const T value) { _value = value; return *this; }
 
 template <typename T>
-void ListNode<T>::operator =(ListNode<T> &element) { _value = element._value; }
+ListNode<T>& ListNode<T>::operator =(const ListNode<T> &element) { _value = element._value; return *this }
 
 template <typename T>
-void ListNode<T>::operator =(ListNode<T> *element) { _value = element->_value; }
+ListNode<T>& ListNode<T>::operator =(const ListNode<T> *element) { _value = element->_value; return *this }
 
 /*
 ================================= Realization of class LinkedList =================================
@@ -340,3 +342,5 @@ std::ostream& operator <<(std::ostream &out, const LinkedList<T> &list) {
 	node = nullptr;
 	return out;
 }
+
+#endif
